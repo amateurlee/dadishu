@@ -8,7 +8,7 @@
 //  - [Chinese] http://www.cocos.com/docs/creator/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/life-cycle-callbacks/index.html
 window.Global = {
-    diShuTotalNumber: 9,
+    diShuTotalNumber: 1,
     letterTotalNumber: 25,  //index from 0
 	letterACode: 65,
 };

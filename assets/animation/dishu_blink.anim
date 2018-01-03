@@ -3,7 +3,7 @@
   "_name": "dishu_blink",
   "_objFlags": 0,
   "_rawFiles": null,
-  "_duration": 0.3333333333333333,
+  "_duration": 0.4,
   "sample": 60,
   "speed": 0.15,
   "wrapMode": 2,
@@ -14,7 +14,7 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "ca776c1a-676f-415c-902a-5cf7f83d21f4"
+              "__uuid__": "1cd60b70-f774-4d2f-a0e7-247c5ef4e866"
             }
           },
           {
@@ -26,7 +26,7 @@
           {
             "frame": 0.05,
             "value": {
-              "__uuid__": "ca776c1a-676f-415c-902a-5cf7f83d21f4"
+              "__uuid__": "1cd60b70-f774-4d2f-a0e7-247c5ef4e866"
             }
           },
           {
@@ -38,13 +38,13 @@
           {
             "frame": 0.1,
             "value": {
-              "__uuid__": "ca776c1a-676f-415c-902a-5cf7f83d21f4"
+              "__uuid__": "1cd60b70-f774-4d2f-a0e7-247c5ef4e866"
             }
           },
           {
-            "frame": 0.31666666666666665,
+            "frame": 0.38333333333333336,
             "value": {
-              "__uuid__": "ca776c1a-676f-415c-902a-5cf7f83d21f4"
+              "__uuid__": "1cd60b70-f774-4d2f-a0e7-247c5ef4e866"
             }
           }
         ]
