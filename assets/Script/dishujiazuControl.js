@@ -13,9 +13,22 @@ window.Global = {
 	letterACode: 65,
 };
 
+var egg_open_url_texture = null;
+var egg_url_texture = null;
+// 加载 Texture，不需要后缀名
+cc.loader.loadRes("res_pic/egg_open", function (err, texture) {
+    var egg_open_url = cc.url.raw("resources/res_pic/egg_open.png"); 
+    egg_open_url_texture = cc.textureCache.addImage(egg_open_url);
+});
+cc.loader.loadRes("res_pic/egg", function (err, texture) {
+    var egg_open_url = cc.url.raw("resources/res_pic/egg.png"); 
+    egg_url_texture = cc.textureCache.addImage(egg_open_url);
+});
+
+
+
 cc.Class({
     extends: cc.Component,
-
     properties: {
         // foo: {
         //     // ATTRIBUTES:
@@ -34,7 +47,7 @@ cc.Class({
         // },
         _currentLetter: null,
         _dishumen:null,
-        _currDishuNode: null
+        _currDishuNode: null,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -45,7 +58,6 @@ cc.Class({
         for(var i=0; i<this._dishumen.length; i++) {
         	this._dishumen[i].active = false;
         }
-        
         console.log("Init one dishu...");
     	this._newDiShu();
     	
@@ -65,24 +77,13 @@ cc.Class({
         console.log('current letter:'+this._currentLetter+", PresedKey:"+String.fromCharCode(keyCode) );
         if( this._currentLetter.charCodeAt() == keyCode  ){
             console.log('Hit!!!!');
-            // console.log('Hit'+this._currDishuNode.getComponent(cc.Sprite).sprite-frame);
-            // console.log('Hit'+this._currDishuNode.Sprite.sprite-frame);
+            this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_open_url_texture);
             this._currDishuNode.active = false;
             this._newDiShu();
         } else {
         	console.log('Missed ~~~');
 
         }
-        /*
-        switch(keyCode) {
-            case cc.KEY.a:
-            case cc.KEY.left:
-                this._left = isDown;
-                this._updateMove(-1);
-                break;
-            default:
-                return;
-        }*/
     },
     
     _newDiShu: function() {
@@ -95,6 +96,9 @@ cc.Class({
 		this._currDishuNode.getChildByName("letter").getComponent(cc.Label).string = randLetter;
         this._currentLetter = randLetter;
         console.log("Current letter is:"+this._currentLetter);
+        // recover egg
+//                     this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
+
     },
     
     _GetRandomNum: function (Min,Max)
