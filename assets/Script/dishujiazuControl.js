@@ -16,14 +16,13 @@ window.Global = {
 var egg_open_url_texture = null;
 var egg_url_texture = null;
 // 加载 Texture，不需要后缀名
-cc.loader.loadRes("res_pic/egg_open", function (err, texture) {
-    var egg_open_url = cc.url.raw("resources/res_pic/egg_open.png"); 
+cc.loader.loadResDir("res_pic", function (err, assets) {
+    var egg_open_url = cc.url.raw("resources/res_pic/egg_open.png");
     egg_open_url_texture = cc.textureCache.addImage(egg_open_url);
-});
-cc.loader.loadRes("res_pic/egg", function (err, texture) {
-    var egg_open_url = cc.url.raw("resources/res_pic/egg.png"); 
+    egg_open_url = cc.url.raw("resources/res_pic/egg.png");
     egg_url_texture = cc.textureCache.addImage(egg_open_url);
 });
+
 
 
 
@@ -60,7 +59,7 @@ cc.Class({
         }
         console.log("Init one dishu...");
     	this._newDiShu();
-    	
+
         // keyboard events
         cc.eventManager.addListener({
             event: cc.EventListener.KEYBOARD,
@@ -85,7 +84,7 @@ cc.Class({
 
         }
     },
-    
+
     _newDiShu: function() {
 		var num = this._GetRandomNum(1, Global.diShuTotalNumber);  //包括左右边界
 		var letterNum = this._GetRandomNum(0, Global.letterTotalNumber);  // 字母个数
@@ -97,17 +96,17 @@ cc.Class({
         this._currentLetter = randLetter;
         console.log("Current letter is:"+this._currentLetter);
         // recover egg
-//                     this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
+        // this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
 
     },
-    
+
     _GetRandomNum: function (Min,Max)
-	{   
-		var Range = Max - Min;   
+	{
+		var Range = Max - Min;
 		var Rand = Math.random();   //范围[0~1]
-		return(Min + Math.round(Rand * Range));   
-	},   
-	  
+		return(Min + Math.round(Rand * Range));
+	},
+
     start () {
     	console.log("start function invoked");
     },
