@@ -8,7 +8,7 @@
 //  - [Chinese] http://www.cocos.com/docs/creator/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/editors_and_tools/creator-chapters/scripting/life-cycle-callbacks/index.html
 window.Global = {
-    diShuTotalNumber: 1,
+    diShuTotalNumber: 9,
     letterTotalNumber: 25,  //index from 0
 	letterACode: 65,
 };
@@ -18,9 +18,13 @@ var egg_url_texture = null;
 // 加载 Texture，不需要后缀名
 cc.loader.loadResDir("res_pic", function (err, assets) {
     var egg_open_url = cc.url.raw("resources/res_pic/egg_open.png");
+    var egg_url = cc.url.raw("resources/res_pic/egg.png");
+    // if (cc.loader.md5Pipe) {
+    //     egg_open_url = cc.loader.md5Pipe.transformURL(egg_open_url);
+    //     egg_url = cc.loader.md5Pipe.transformURL(egg_url);
+    // }
     egg_open_url_texture = cc.textureCache.addImage(egg_open_url);
-    egg_open_url = cc.url.raw("resources/res_pic/egg.png");
-    egg_url_texture = cc.textureCache.addImage(egg_open_url);
+    egg_url_texture = cc.textureCache.addImage(egg_url);
 });
 
 
@@ -73,15 +77,27 @@ cc.Class({
     },
 
 	_keyHandler: function(keyCode, isDown) {
+        var audios = this.getComponents(cc.AudioSource);
         console.log('current letter:'+this._currentLetter+", PresedKey:"+String.fromCharCode(keyCode) );
         if( this._currentLetter.charCodeAt() == keyCode  ){
             console.log('Hit!!!!');
+            //更改成功的egg图片
+            console.log("orgurl:"+this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.rawUrl);
             this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_open_url_texture);
-            this._currDishuNode.active = false;
-            this._newDiShu();
+            console.log("orgurl:"+this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.rawUrl);
+            this._currDishuNode.getChildByName("letter").active=false;
+            //播放成功声音声音
+            audios[0].play();
+            //显示3秒钟egg_open图片后，更换egg
+            this.scheduleOnce(function () {
+                //2秒钟后执行
+                this._currDishuNode.active = false;
+                this._newDiShu();
+            },2);
         } else {
         	console.log('Missed ~~~');
-
+            // 播放失败声音
+            audios[1].play();
         }
     },
 
@@ -96,8 +112,8 @@ cc.Class({
         this._currentLetter = randLetter;
         console.log("Current letter is:"+this._currentLetter);
         // recover egg
-        // this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
-
+        this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
+        this._currDishuNode.getChildByName("letter").active=true;
     },
 
     _GetRandomNum: function (Min,Max)

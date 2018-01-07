@@ -2,9 +2,7 @@
   "appKey": "",
   "appSecret": "",
   "encryptJs": true,
-  "excludeScenes": [
-    "2d2f792f-a40c-49bb-a189-ed176a246e49"
-  ],
+  "excludeScenes": [],
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -23,7 +21,7 @@
   "packageName": "org.cocos2d.helloworld",
   "privateKey": "",
   "renderMode": "0",
-  "startScene": "d7e0911c-0c12-487a-88bb-df07e5b0690e",
+  "startScene": "93d02c17-26fc-43b2-9294-ed0b473dcfa6",
   "title": "dishu",
   "webOrientation": "auto",
   "wechatgame": {
