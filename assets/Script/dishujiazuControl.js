@@ -13,41 +13,13 @@ window.Global = {
 	letterACode: 65,
 };
 
-var egg_open_url_texture = null;
-var egg_url_texture = null;
+var egg_sprite = null;
+var egg_open_sprite = null;
 // 加载 Texture，不需要后缀名
-cc.loader.loadResDir("res_pic", function (err, assets) {
-    var egg_open_url = cc.url.raw("resources/res_pic/egg_open.png");
-    var egg_url = cc.url.raw("resources/res_pic/egg.png");
-    // if (cc.loader.md5Pipe) {
-    //     egg_open_url = cc.loader.md5Pipe.transformURL(egg_open_url);
-    //     egg_url = cc.loader.md5Pipe.transformURL(egg_url);
-    // }
-    egg_open_url_texture = cc.textureCache.addImage(egg_open_url);
-    egg_url_texture = cc.textureCache.addImage(egg_url);
-});
-
-
-
 
 cc.Class({
     extends: cc.Component,
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
         _currentLetter: null,
         _dishumen:null,
         _currDishuNode: null,
@@ -61,8 +33,31 @@ cc.Class({
         for(var i=0; i<this._dishumen.length; i++) {
         	this._dishumen[i].active = false;
         }
+
+        cc.loader.loadRes("imgs/egg", cc.SpriteFrame, function (err, spriteFrameEgg) {
+            if (err) {
+                cc.error(err.message || err);
+                console.log("DEBUG: err"+err);
+                return;
+            }
+            egg_sprite = spriteFrameEgg;
+        });
+        // load the sprite frame of (project/assets/resources/imgs/eggopen.png) from resources folder
+        cc.loader.loadRes('imgs/eggopen', cc.SpriteFrame, function (err, spriteFrame) {
+            if (err) {
+                cc.error(err.message || err);
+                console.log("DEBUG: err"+err);
+                return;
+            }
+            // cc.log('Result should be a sprite frame: ' + (spriteFrame instanceof cc.SpriteFrame));
+            egg_open_sprite = spriteFrame;
+        });
+
         console.log("Init one dishu...");
-    	this._newDiShu();
+        this.scheduleOnce(function () {
+            //2秒钟后执行
+            this._newDiShu();
+        },1);
 
         // keyboard events
         cc.eventManager.addListener({
@@ -82,9 +77,7 @@ cc.Class({
         if( this._currentLetter.charCodeAt() == keyCode  ){
             console.log('Hit!!!!');
             //更改成功的egg图片
-            console.log("orgurl:"+this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.rawUrl);
-            this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_open_url_texture);
-            console.log("orgurl:"+this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.rawUrl);
+            this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame = egg_open_sprite;
             this._currDishuNode.getChildByName("letter").active=false;
             //播放成功声音声音
             audios[0].play();
@@ -112,7 +105,7 @@ cc.Class({
         this._currentLetter = randLetter;
         console.log("Current letter is:"+this._currentLetter);
         // recover egg
-        this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame.setTexture(egg_url_texture);
+        this._currDishuNode.getChildByName("egg").getComponent(cc.Sprite).spriteFrame = egg_sprite;
         this._currDishuNode.getChildByName("letter").active=true;
     },
 
